@@ -1,6 +1,7 @@
 const express = require("express");
 const breads = express.Router();
 const Bread = require("../models/bread.js");
+const Baker = require('../models/baker.js');
 
 
 // INDEX
@@ -18,6 +19,18 @@ breads.get("/", (req, res) => {
 breads.get("/new", (req, res) => {
   res.render("new");
 });
+
+
+// in the new route
+breads.get('/new', (req, res) => {
+    Baker.find()
+        .then(foundBakers => {
+            res.render('new', {
+                bakers: foundBakers
+            })
+      })
+})
+
 
 //CREATING A NEW SEED ROUTE
 breads.get('/data/seed', (req, res) => {
