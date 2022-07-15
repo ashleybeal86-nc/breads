@@ -5,6 +5,17 @@ const Baker = require("../models/baker.js");
 const bakerSeedData = require("../models/baker_seed.js");
 
 
+//INDEX
+baker.get('/', (req, res) => {
+    Baker.find()
+    .populate('breads')
+        .then(foundBakers => {
+            res.send(foundBakers)
+        })
+})                    
+
+
+
 //seed route
 baker.get("/data/seed", (req, res) => {
   Baker.insertMany(bakerSeedData).then(res.redirect("/breads"));
