@@ -5,19 +5,15 @@ const Baker = require('../models/baker.js');
 
 
 // INDEX
-breads.get('/', (req, res) => {
-  Baker.find()
-    .then(foundBakers => {
-      Bread.find()
-      .then(foundBreads => {
+breads.get('/', async (req, res) => {
+  const foundBakers = await Baker.find().lean()
+  const foundBreads = await Bread.find().limit(2).lean()
           res.render('index', {
               breads: foundBreads,
               bakers: foundBakers,
               title: 'Index Page'
           })
       })
-    })
-})
 
 
 // in the new route
